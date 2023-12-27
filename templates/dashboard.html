@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | GastroMaster{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block navbar %}
+    <div class="header">
+      <div class="headerContent">
+        <h1>GastroMaster</h1>
+      </div>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+
+  <main class="mainContent">
+
+<!--    left side-->
+
+    <div class="leftContent">
+        <div class="contentCard">
+
+          <div id="orgInfo">
+
+            <div id="orgImagePlaceholder">
+                <img class="orgImage" src="{{orgPic}}" alt="OrgPic">
+            </div>
+
+            <div id="orgTextHandler">
+              <h2 id="organizationName">{{orgName}}</h2>
+
+              <div id="additionalInfoHandler">
+                <p class="additionalInfo" id="income">+ 45336</p>
+                <p class="additionalInfo" id="currentPeopleCounter">p 156</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="DetailsAndPlaceholderHandler">
+            <div class="contentCard" id="detailMenu">
+                <nav>
+                    <ul>
+                        <li><a href="#">Workers</a></li>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">Menu</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="contentCard" id="placeholder">
+
+            </div>
+        </div>
+
+
+    </div>
+
+<!--    right side  -->
+
+    <div class="rightContent">
+        <div class="contentCard" id="Guests">
+
+            <canvas id="guestsLineChart" width="650" height="550"></canvas>
+            <script>
+                var ctx = document.getElementById("guestsLineChart").getContext("2d");
+                var lineChart = new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: {{ guestLabels | safe }},
+                        datasets: [{
+
+                                label: "data points",
+                                data: {{ guestValues | safe }},
+                                fill: false,
+                                borderColor: "rgb(199,199,199)",
+                                lineTension: 0.1
+
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 2,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                })
+
+            </script>
+
+        </div>
+
+        <div class="bottomRightContent">
+            <div class="contentCard" id="outcomes">
+
+            </div>
+            <div class="contentCard" id="calendar">
+
+            </div>
+        </div>
+
+
+    </div>
+
+  </main>
+{% endblock %}
